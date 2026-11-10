@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Wrapper so the binary finds its co-located dylibs regardless of CWD.
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+exec "$DIR/vendor/llama-b12119/llama-b12119/llama-bench" "$@"

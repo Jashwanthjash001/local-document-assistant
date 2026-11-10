@@ -10,3 +10,9 @@ data/chroma_db/*
 !data/chroma_db/.gitkeep
 
 .DS_Store
+
+# serving layer — large binaries/models are reproducible via serving/setup.sh
+serving/vendor/
+serving/models/
+*.gguf
+*.tar.gz
