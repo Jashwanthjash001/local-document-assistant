@@ -1,0 +1,20 @@
+# Stage 1 — project setup & API skeleton.
+# (Later stages add: chromadb, sentence-transformers, streamlit, etc.)
+fastapi
+uvicorn            # dev ASGI server (plain asyncio; no uvloop build needed)
+python-multipart   # required by FastAPI to parse file uploads (multipart/form-data)
+
+# Stage 2 — PDF text extraction
+pymupdf            # fast PDF text extraction (import as `pymupdf`)
+
+# Stage 3 — embeddings & vector store
+sentence-transformers   # all-MiniLM-L6-v2 (CPU)
+chromadb                # persistent vector database
+
+# Stage 6 — frontend
+streamlit          # the UI
+pandas             # evaluation dashboard table/chart
+
+# --- testing ---
+pytest
+httpx              # FastAPI TestClient uses this under the hood
