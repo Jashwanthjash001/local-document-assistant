@@ -73,7 +73,8 @@ class HybridRetriever:
         bm_scores = bm25.get_scores(_tokenize(query))
         bm_order = sorted(range(len(chunks)), key=lambda i: -bm_scores[i])
         if mode == "bm25":
-            return [self._row(chunks[i], score=float(bm_scores[i])) for i in bm_order[:top_k]]
+            return [self._row(chunks[i], distance=dist[chunks[i]["id"]], score=float(bm_scores[i]))
+                    for i in bm_order[:top_k]]
 
         # hybrid: Reciprocal Rank Fusion of the two rankings, keyed by chunk id.
         rank_d = {c["id"]: r for r, c in enumerate(dense, start=1)}

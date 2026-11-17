@@ -13,7 +13,7 @@ from __future__ import annotations
 from fastapi import FastAPI
 
 from app import config
-from app.api import upload, chat, search
+from app.api import upload, chat, search, agent
 
 app = FastAPI(
     title=config.APP_NAME,
@@ -25,6 +25,7 @@ app = FastAPI(
 app.include_router(upload.router)
 app.include_router(search.router)
 app.include_router(chat.router)
+app.include_router(agent.router)
 
 
 @app.get("/health", tags=["system"])

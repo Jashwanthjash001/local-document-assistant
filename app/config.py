@@ -27,8 +27,9 @@ CHROMA_DIR.mkdir(parents=True, exist_ok=True)
 ALLOWED_EXTENSIONS = {".pdf"}
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024     # 50 MB cap for now
 
-# --- Local LLM (reuses edge-ai-client's llama.cpp server) ------------------
-# Point this at the OpenAI-compatible server started by edge-ai-client/src/serve.sh.
+# --- Local LLM (OpenAI-compatible: llama.cpp or Ollama) --------------------
+# Default points at the llama.cpp server (serving/serve.sh). To use Ollama instead:
+#   LLM_BASE_URL=http://localhost:11434/v1  LLM_MODEL=qwen2.5:7b
 # This is ALWAYS a local address — the app must never fall back to a cloud model
 # or send document content off the machine.
 LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:8080/v1")
