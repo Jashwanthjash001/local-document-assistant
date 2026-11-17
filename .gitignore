@@ -16,3 +16,5 @@ serving/vendor/
 serving/models/
 *.gguf
 *.tar.gz
+evals/.chroma_eval/
+evals/corpus/

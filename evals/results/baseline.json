@@ -1,0 +1,308 @@
+{
+  "mode": "dense-only (baseline)",
+  "corpus_docs": 4,
+  "chunks_indexed": 28,
+  "n_answerable": 40,
+  "n_abstain": 8,
+  "relevance_threshold": 0.6,
+  "top_k": 10,
+  "recall": {
+    "@1": 0.95,
+    "@3": 0.975,
+    "@5": 1.0,
+    "@10": 1.0
+  },
+  "mrr": 0.969,
+  "abstain_accuracy": 0.875,
+  "false_abstain_rate": 0.1,
+  "per_question": [
+    {
+      "id": "sa01",
+      "rank": 1,
+      "top_distance": 0.505,
+      "answered": true
+    },
+    {
+      "id": "sa02",
+      "rank": 1,
+      "top_distance": 0.399,
+      "answered": true
+    },
+    {
+      "id": "sa03",
+      "rank": 1,
+      "top_distance": 0.512,
+      "answered": true
+    },
+    {
+      "id": "sa04",
+      "rank": 1,
+      "top_distance": 0.336,
+      "answered": true
+    },
+    {
+      "id": "sa05",
+      "rank": 1,
+      "top_distance": 0.328,
+      "answered": true
+    },
+    {
+      "id": "sa06",
+      "rank": 1,
+      "top_distance": 0.164,
+      "answered": true
+    },
+    {
+      "id": "sa07",
+      "rank": 1,
+      "top_distance": 0.257,
+      "answered": true
+    },
+    {
+      "id": "sa08",
+      "rank": 1,
+      "top_distance": 0.376,
+      "answered": true
+    },
+    {
+      "id": "sa09",
+      "rank": 1,
+      "top_distance": 0.212,
+      "answered": true
+    },
+    {
+      "id": "sa10",
+      "rank": 1,
+      "top_distance": 0.417,
+      "answered": true
+    },
+    {
+      "id": "sa11",
+      "rank": 1,
+      "top_distance": 0.24,
+      "answered": true
+    },
+    {
+      "id": "sa12",
+      "rank": 1,
+      "top_distance": 0.473,
+      "answered": true
+    },
+    {
+      "id": "eh01",
+      "rank": 1,
+      "top_distance": 0.291,
+      "answered": true
+    },
+    {
+      "id": "eh02",
+      "rank": 1,
+      "top_distance": 0.376,
+      "answered": true
+    },
+    {
+      "id": "eh03",
+      "rank": 1,
+      "top_distance": 0.211,
+      "answered": true
+    },
+    {
+      "id": "eh04",
+      "rank": 1,
+      "top_distance": 0.316,
+      "answered": true
+    },
+    {
+      "id": "eh05",
+      "rank": 1,
+      "top_distance": 0.244,
+      "answered": true
+    },
+    {
+      "id": "eh06",
+      "rank": 1,
+      "top_distance": 0.24,
+      "answered": true
+    },
+    {
+      "id": "eh07",
+      "rank": 1,
+      "top_distance": 0.455,
+      "answered": true
+    },
+    {
+      "id": "eh08",
+      "rank": 1,
+      "top_distance": 0.426,
+      "answered": true
+    },
+    {
+      "id": "eh09",
+      "rank": 1,
+      "top_distance": 0.304,
+      "answered": true
+    },
+    {
+      "id": "eh10",
+      "rank": 1,
+      "top_distance": 0.585,
+      "answered": true
+    },
+    {
+      "id": "eh11",
+      "rank": 1,
+      "top_distance": 0.235,
+      "answered": true
+    },
+    {
+      "id": "eh12",
+      "rank": 1,
+      "top_distance": 0.245,
+      "answered": true
+    },
+    {
+      "id": "pm01",
+      "rank": 1,
+      "top_distance": 0.397,
+      "answered": true
+    },
+    {
+      "id": "pm02",
+      "rank": 1,
+      "top_distance": 0.303,
+      "answered": true
+    },
+    {
+      "id": "pm03",
+      "rank": 1,
+      "top_distance": 0.664,
+      "answered": false
+    },
+    {
+      "id": "pm04",
+      "rank": 1,
+      "top_distance": 0.515,
+      "answered": true
+    },
+    {
+      "id": "pm05",
+      "rank": 1,
+      "top_distance": 0.618,
+      "answered": false
+    },
+    {
+      "id": "pm06",
+      "rank": 2,
+      "top_distance": 0.662,
+      "answered": false
+    },
+    {
+      "id": "pm07",
+      "rank": 1,
+      "top_distance": 0.533,
+      "answered": true
+    },
+    {
+      "id": "pm08",
+      "rank": 1,
+      "top_distance": 0.627,
+      "answered": false
+    },
+    {
+      "id": "pp01",
+      "rank": 1,
+      "top_distance": 0.391,
+      "answered": true
+    },
+    {
+      "id": "pp02",
+      "rank": 1,
+      "top_distance": 0.316,
+      "answered": true
+    },
+    {
+      "id": "pp03",
+      "rank": 1,
+      "top_distance": 0.185,
+      "answered": true
+    },
+    {
+      "id": "pp04",
+      "rank": 1,
+      "top_distance": 0.301,
+      "answered": true
+    },
+    {
+      "id": "pp05",
+      "rank": 1,
+      "top_distance": 0.305,
+      "answered": true
+    },
+    {
+      "id": "pp06",
+      "rank": 4,
+      "top_distance": 0.396,
+      "answered": true
+    },
+    {
+      "id": "pp07",
+      "rank": 1,
+      "top_distance": 0.403,
+      "answered": true
+    },
+    {
+      "id": "pp08",
+      "rank": 1,
+      "top_distance": 0.398,
+      "answered": true
+    },
+    {
+      "id": "ab01",
+      "rank": null,
+      "top_distance": 0.759,
+      "answered": false
+    },
+    {
+      "id": "ab02",
+      "rank": null,
+      "top_distance": 0.732,
+      "answered": false
+    },
+    {
+      "id": "ab03",
+      "rank": null,
+      "top_distance": 0.782,
+      "answered": false
+    },
+    {
+      "id": "ab04",
+      "rank": null,
+      "top_distance": 0.572,
+      "answered": true
+    },
+    {
+      "id": "ab05",
+      "rank": null,
+      "top_distance": 0.751,
+      "answered": false
+    },
+    {
+      "id": "ab06",
+      "rank": null,
+      "top_distance": 0.882,
+      "answered": false
+    },
+    {
+      "id": "ab07",
+      "rank": null,
+      "top_distance": 0.854,
+      "answered": false
+    },
+    {
+      "id": "ab08",
+      "rank": null,
+      "top_distance": 0.656,
+      "answered": false
+    }
+  ]
+}
