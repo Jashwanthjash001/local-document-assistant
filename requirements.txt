@@ -1,21 +1,29 @@
-# Stage 1 — project setup & API skeleton.
-# (Later stages add: chromadb, sentence-transformers, streamlit, etc.)
+# Core dependencies for the Document Intelligence Agent.
+
+# API + serving
 fastapi
-uvicorn            # dev ASGI server (plain asyncio; no uvloop build needed)
-python-multipart   # required by FastAPI to parse file uploads (multipart/form-data)
+uvicorn            # ASGI server (also serves the web UI at /ui)
+python-multipart   # FastAPI multipart parsing (file uploads)
 
-# Stage 2 — PDF text extraction
-pymupdf            # fast PDF text extraction (import as `pymupdf`)
+# PDF text extraction
+pymupdf            # fast per-page extraction (import as `pymupdf`)
 
-# Stage 3 — embeddings & vector store
+# embeddings + vector store
 sentence-transformers   # all-MiniLM-L6-v2 (CPU)
 chromadb                # persistent vector database
 
-# Stage 6 — frontend
-streamlit          # the UI
+# retrieval
+rank-bm25          # BM25 for hybrid (dense + keyword) retrieval
+
+# Streamlit UI (the web chat UI at /ui needs no extra deps)
+streamlit
 pandas             # evaluation dashboard table/chart
 
 # --- testing ---
 pytest
-httpx              # FastAPI TestClient uses this under the hood
-rank-bm25
+httpx              # FastAPI TestClient + the vision/LLM HTTP calls
+
+# --- optional ---
+# docling         # enables EXTRACTION_MODE=docling (layout + tables + OCR). Heavy
+#                 # (pulls torch models). Without it, extraction falls back to basic.
+# Image extraction needs a local vision model (a VLM pulled via Ollama), not a pip dep.
