@@ -92,7 +92,7 @@ def test_answered_grounds_and_cites():
     assert res["status"] == "answered"
     assert res["sources"] and res["sources"][0]["page_number"] == 2
     assert res["mode"] == "hybrid"
-    assert any(s["step"] == "retrieve" for s in res["trace"])
+    assert any(s.get("tool") == "search_documents" for s in res["trace"])
 
 
 def test_abstains_when_nothing_relevant():

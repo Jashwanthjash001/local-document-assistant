@@ -15,6 +15,7 @@ from dataclasses import asdict
 
 from app import config
 from app.agents.triage import triage
+from app.agents.tools import Toolbox
 from app.services.hybrid import get_hybrid_retriever
 from app.services import prompt_builder
 
@@ -56,8 +57,12 @@ _SCHEMA_SYSTEM = (
 # A request for output in a specific shape/schema: a JSON-ish template, "in this
 # format", "as json/a table", "fill this", etc. These should be filled, not refused.
 _FORMAT = re.compile(
-    r"\{[^{}]*:[^{}]*\}|\bin (this|the|that) format\b|\bas json\b|\bfill (this|the|in|out)\b|"
-    r"\bas a table\b|\btabular\b|\bin the form\b", re.I)
+    r"\{[^{}]*:[^{}]*\}|"                                 # a {field: ""} template
+    r"\b(in|as)\b.{0,14}\bjson\b|\bjson\b.{0,10}\bformat\b|"   # "in json", "as a json object", "json format"
+    r"\bin (this|the|that) format\b|\bfill (this|the|in|out)\b|"
+    r"\bas a table\b|\btabular\b|\bin the form\b|"
+    r"\bextract\b.{0,40}\b(name|email|e-?mail|phone|mobile|number|field|value|date|id|address|list)\b",
+    re.I)
 
 
 def _schema_messages(request, retrieved, sources) -> list[dict]:
@@ -95,6 +100,7 @@ def run_turn(messages: list[dict], mode: str | None = None, doc_id: str | None =
     mode = mode or config.RETRIEVAL_MODE
     llm = llm if llm is not None else get_llm_client()
     retriever = retriever if retriever is not None else get_hybrid_retriever()
+    tools = Toolbox(retriever)
 
     message = _last_user(messages)
     history = messages[:-1]
@@ -134,9 +140,34 @@ def run_turn(messages: list[dict], mode: str | None = None, doc_id: str | None =
                 "sources": [], "mode": mode, "trace": trace}
 
     query = plan["standalone_query"]
-    hits = retriever.retrieve(query, top_k=top_k, doc_id=doc_id, mode=mode)
+
+    # Structured extraction / schema-fill: the agent reads the WHOLE scoped document
+    # (tool: read_document) — or widens the search when no doc is picked — and skips the
+    # relevance gate, so fields like a phone or email in a header are never missed. It
+    # fills the requested shape and blanks what's absent, rather than refusing.
+    if _FORMAT.search(message):
+        if doc_id:
+            passages = tools.read_document(doc_id)[:25]
+            trace.append({"step": "tool", "tool": "read_document", "doc_id": doc_id, "passages": len(passages)})
+        else:
+            passages = tools.search_documents(query, top_k=max(top_k, 15), doc_id=None, mode=mode)
+            trace.append({"step": "tool", "tool": "search_documents", "scope": "all",
+                          "top_k": max(top_k, 15), "passages": len(passages)})
+        if not passages:
+            trace.append({"step": "abstain", "reason": "no documents to extract from"})
+            return {"intent": "extract", "status": "insufficient_evidence",
+                    "answer": config.ABSTAIN_MESSAGE, "sources": [], "mode": mode, "trace": trace}
+        sources = prompt_builder.build_sources(passages)
+        answer = llm.complete(_schema_messages(message, passages, sources))
+        cited = prompt_builder.validate_citations(answer, sources)
+        trace.append({"step": "extract", "sources_cited": [s.source_id for s in cited]})
+        return {"intent": "extract", "status": "answered", "answer": answer,
+                "sources": [asdict(s) for s in cited], "mode": mode, "trace": trace}
+
+    # Normal Q&A / summarize: search (tool) + relevance gate.
+    hits = tools.search_documents(query, top_k=top_k, doc_id=doc_id, mode=mode)
     relevant = [h for h in hits if h.distance is not None and h.distance <= config.RELEVANCE_MAX_DISTANCE]
-    trace.append({"step": "retrieve", "mode": mode, "retrieved": len(hits),
+    trace.append({"step": "tool", "tool": "search_documents", "mode": mode, "retrieved": len(hits),
                   "relevant": len(relevant),
                   "top_distance": round(hits[0].distance, 3) if hits and hits[0].distance is not None else None})
 
@@ -147,11 +178,7 @@ def run_turn(messages: list[dict], mode: str | None = None, doc_id: str | None =
                 "answer": config.ABSTAIN_MESSAGE, "sources": [], "mode": mode, "trace": trace}
 
     sources = prompt_builder.build_sources(relevant)
-    is_format = bool(_FORMAT.search(message))
-    if is_format:
-        msgs = _schema_messages(message, relevant, sources)
-        step, out_intent = "extract", "extract"
-    elif plan["intent"] == "summarize":
+    if plan["intent"] == "summarize":
         msgs = _summary_messages(query, relevant, sources)
         step, out_intent = "summarize", "summarize"
     else:
@@ -161,9 +188,8 @@ def run_turn(messages: list[dict], mode: str | None = None, doc_id: str | None =
     answer = llm.complete(msgs)
 
     # Model declined (the gate passed a topically-close but unanswerable query):
-    # report it honestly. Format/extract requests are meant to blank missing fields,
-    # not refuse, so they skip this.
-    if not is_format and _DECLINE.search(answer):
+    # report it honestly as "no answer in docs".
+    if _DECLINE.search(answer):
         trace.append({"step": step, "note": "model found no answer in the passages"})
         return {"intent": plan["intent"], "status": "insufficient_evidence", "answer": answer,
                 "sources": [], "mode": mode, "trace": trace}
