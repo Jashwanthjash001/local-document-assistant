@@ -1,0 +1,68 @@
+{"id": "sa01", "question": "Who are the parties to the service agreement?", "doc": "service_agreement", "page": 1, "answerable": true}
+{"id": "sa02", "question": "When does the service agreement take effect?", "doc": "service_agreement", "page": 1, "answerable": true}
+{"id": "sa03", "question": "What is the initial term of the agreement?", "doc": "service_agreement", "page": 2, "answerable": true}
+{"id": "sa04", "question": "How much notice is needed for non-renewal of the agreement?", "doc": "service_agreement", "page": 2, "answerable": true}
+{"id": "sa05", "question": "How much notice is required to terminate for convenience?", "doc": "service_agreement", "page": 3, "answerable": true}
+{"id": "sa06", "question": "When can the agreement be terminated immediately?", "doc": "service_agreement", "page": 3, "answerable": true}
+{"id": "sa07", "question": "When is payment due after an invoice is issued?", "doc": "service_agreement", "page": 4, "answerable": true}
+{"id": "sa08", "question": "What interest is charged on late payments?", "doc": "service_agreement", "page": 4, "answerable": true}
+{"id": "sa09", "question": "How long do confidentiality obligations last after termination?", "doc": "service_agreement", "page": 5, "answerable": true}
+{"id": "sa10", "question": "What is the cap on each party's liability?", "doc": "service_agreement", "page": 6, "answerable": true}
+{"id": "sa11", "question": "Who owns deliverables created for the client?", "doc": "service_agreement", "page": 7, "answerable": true}
+{"id": "sa12", "question": "Which state's law governs the agreement?", "doc": "service_agreement", "page": 8, "answerable": true}
+{"id": "eh01", "question": "How many days per week can employees work remotely?", "doc": "employee_handbook", "page": 1, "answerable": true}
+{"id": "eh02", "question": "What are the core collaboration hours?", "doc": "employee_handbook", "page": 1, "answerable": true}
+{"id": "eh03", "question": "How many paid vacation days do full-time employees get?", "doc": "employee_handbook", "page": 2, "answerable": true}
+{"id": "eh04", "question": "How many unused vacation days can be carried over?", "doc": "employee_handbook", "page": 2, "answerable": true}
+{"id": "eh05", "question": "How many paid sick days are provided each year?", "doc": "employee_handbook", "page": 3, "answerable": true}
+{"id": "eh06", "question": "When is a doctor's note required for sick leave?", "doc": "employee_handbook", "page": 3, "answerable": true}
+{"id": "eh07", "question": "What is the daily meal reimbursement limit during travel?", "doc": "employee_handbook", "page": 5, "answerable": true}
+{"id": "eh08", "question": "Within how many days must expenses be submitted?", "doc": "employee_handbook", "page": 5, "answerable": true}
+{"id": "eh09", "question": "What is the minimum laptop password length?", "doc": "employee_handbook", "page": 6, "answerable": true}
+{"id": "eh10", "question": "How quickly must a lost device be reported?", "doc": "employee_handbook", "page": 6, "answerable": true}
+{"id": "eh11", "question": "When are performance reviews conducted?", "doc": "employee_handbook", "page": 7, "answerable": true}
+{"id": "eh12", "question": "How much notice must a resigning employee give?", "doc": "employee_handbook", "page": 8, "answerable": true}
+{"id": "pm01", "question": "How far from walls should the Aurora X1 be placed?", "doc": "product_manual", "page": 1, "answerable": true}
+{"id": "pm02", "question": "What room size does the Aurora X1 cover?", "doc": "product_manual", "page": 2, "answerable": true}
+{"id": "pm03", "question": "How much power does the device consume at maximum speed?", "doc": "product_manual", "page": 2, "answerable": true}
+{"id": "pm04", "question": "What percentage of particles does the HEPA filter capture?", "doc": "product_manual", "page": 2, "answerable": true}
+{"id": "pm05", "question": "What operating modes does the device have?", "doc": "product_manual", "page": 3, "answerable": true}
+{"id": "pm06", "question": "What does a blinking red light indicate?", "doc": "product_manual", "page": 4, "answerable": true}
+{"id": "pm07", "question": "How long is the warranty?", "doc": "product_manual", "page": 5, "answerable": true}
+{"id": "pm08", "question": "What safety standards does the device comply with?", "doc": "product_manual", "page": 6, "answerable": true}
+{"id": "pp01", "question": "What account information does the service collect?", "doc": "privacy_policy", "page": 1, "answerable": true}
+{"id": "pp02", "question": "Does the company sell personal data?", "doc": "privacy_policy", "page": 2, "answerable": true}
+{"id": "pp03", "question": "How long is data retained after account closure?", "doc": "privacy_policy", "page": 3, "answerable": true}
+{"id": "pp04", "question": "With whom does the service share data?", "doc": "privacy_policy", "page": 4, "answerable": true}
+{"id": "pp05", "question": "What rights do users have over their data?", "doc": "privacy_policy", "page": 5, "answerable": true}
+{"id": "pp06", "question": "How is data protected?", "doc": "privacy_policy", "page": 6, "answerable": true}
+{"id": "pp07", "question": "How can users contact the company about privacy?", "doc": "privacy_policy", "page": 6, "answerable": true}
+{"id": "pp08", "question": "How quickly are privacy requests answered?", "doc": "privacy_policy", "page": 6, "answerable": true}
+{"id": "ab01", "question": "What is the company's stock ticker symbol?", "doc": null, "page": null, "answerable": false}
+{"id": "ab02", "question": "How many employees does the company have?", "doc": null, "page": null, "answerable": false}
+{"id": "ab03", "question": "What is the CEO's annual salary?", "doc": null, "page": null, "answerable": false}
+{"id": "ab04", "question": "What colors is the Aurora X2 model available in?", "doc": null, "page": null, "answerable": false}
+{"id": "ab05", "question": "What is the refund policy for cancelled orders?", "doc": null, "page": null, "answerable": false}
+{"id": "ab06", "question": "Is there a mobile app for iOS?", "doc": null, "page": null, "answerable": false}
+{"id": "ab07", "question": "What is the office address in Tokyo?", "doc": null, "page": null, "answerable": false}
+{"id": "ab08", "question": "What discount applies for annual prepayment?", "doc": null, "page": null, "answerable": false}
+{"id": "h01", "question": "Which header carries the API key?", "doc": "api_reference", "page": 1, "answerable": true, "hard": true}
+{"id": "h02", "question": "What is the maximum file size for ingestion?", "doc": "api_reference", "page": 3, "answerable": true, "hard": true}
+{"id": "h03", "question": "What is the default rate limit per minute?", "doc": "api_reference", "page": 5, "answerable": true, "hard": true}
+{"id": "h04", "question": "Which error code means the uploaded file exceeds the size limit?", "doc": "api_reference", "page": 6, "answerable": true, "hard": true}
+{"id": "h05", "question": "Which endpoint is used to upload documents?", "doc": "api_reference", "page": 3, "answerable": true, "hard": true}
+{"id": "h06", "question": "What is the maximum top_k on the search endpoint?", "doc": "api_reference", "page": 4, "answerable": true, "hard": true}
+{"id": "h07", "question": "Which configuration key sets the per-request timeout?", "doc": "api_reference", "page": 7, "answerable": true, "hard": true}
+{"id": "h08", "question": "How are webhook notifications signed?", "doc": "api_reference", "page": 8, "answerable": true, "hard": true}
+{"id": "h09", "question": "What compliance certifications does the company hold?", "doc": "security_policy", "page": 1, "answerable": true, "hard": true}
+{"id": "h10", "question": "What encryption is used for data at rest?", "doc": "security_policy", "page": 2, "answerable": true, "hard": true}
+{"id": "h11", "question": "How often are encryption keys rotated?", "doc": "security_policy", "page": 2, "answerable": true, "hard": true}
+{"id": "h12", "question": "Within how long must a breach be disclosed to affected customers?", "doc": "security_policy", "page": 4, "answerable": true, "hard": true}
+{"id": "h13", "question": "How long must administrative passwords be?", "doc": "security_policy", "page": 6, "answerable": true, "hard": true}
+{"id": "h14", "question": "Which release added hybrid retrieval?", "doc": "release_notes", "page": 1, "answerable": true, "hard": true}
+{"id": "h15", "question": "Which bug was fixed in release 3.1.0?", "doc": "release_notes", "page": 2, "answerable": true, "hard": true}
+{"id": "h16", "question": "Which bug causes slow ingestion for large files?", "doc": "release_notes", "page": 4, "answerable": true, "hard": true}
+{"id": "h17", "question": "Which release removes the legacy v1 endpoints?", "doc": "release_notes", "page": 3, "answerable": true, "hard": true}
+{"id": "h18", "question": "What will the default embedding model change to?", "doc": "release_notes", "page": 5, "answerable": true, "hard": true}
+{"id": "ab09", "question": "Which release adds voice input support?", "doc": null, "page": null, "answerable": false, "hard": true}
+{"id": "ab10", "question": "What is the price of the enterprise plan?", "doc": null, "page": null, "answerable": false, "hard": true}

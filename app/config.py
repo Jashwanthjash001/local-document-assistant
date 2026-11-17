@@ -27,8 +27,9 @@ CHROMA_DIR.mkdir(parents=True, exist_ok=True)
 ALLOWED_EXTENSIONS = {".pdf"}
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024     # 50 MB cap for now
 
-# --- Local LLM (reuses edge-ai-client's llama.cpp server) ------------------
-# Point this at the OpenAI-compatible server started by edge-ai-client/src/serve.sh.
+# --- Local LLM (OpenAI-compatible: llama.cpp or Ollama) --------------------
+# Default points at the llama.cpp server (serving/serve.sh). To use Ollama instead:
+#   LLM_BASE_URL=http://localhost:11434/v1  LLM_MODEL=qwen2.5:7b
 # This is ALWAYS a local address — the app must never fall back to a cloud model
 # or send document content off the machine.
 LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:8080/v1")
@@ -63,6 +64,21 @@ CHROMA_COLLECTION = os.getenv("CHROMA_COLLECTION", "documents")
 CHUNK_TARGET_TOKENS = int(os.getenv("CHUNK_TARGET_TOKENS", "200"))
 CHUNK_OVERLAP_TOKENS = int(os.getenv("CHUNK_OVERLAP_TOKENS", "30"))
 CHUNK_MAX_TOKENS = int(os.getenv("CHUNK_MAX_TOKENS", "256"))
+
+# Retrieval mode: "dense" (vector only, the original), "bm25" (keyword only),
+# or "hybrid" (dense + BM25 fused with Reciprocal Rank Fusion). Switchable per
+# request from the UI; this is the default.
+RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "dense")
+RRF_K = int(os.getenv("RRF_K", "60"))   # RRF damping constant
+
+# Extraction: "basic" (PyMuPDF text, the default) or "docling" (layout + tables +
+# OCR for scanned pages; heavier, optional dependency, falls back to basic).
+EXTRACTION_MODE = os.getenv("EXTRACTION_MODE", "basic")
+
+# Local vision model for extracting images/figures from a page (a VLM served by
+# Ollama, e.g. a qwen2-vl or granite-docling). Empty = image extraction disabled.
+VISION_MODEL = os.getenv("VISION_MODEL", "")
+VISION_BASE_URL = os.getenv("VISION_BASE_URL", LLM_BASE_URL)
 
 # --- App metadata ----------------------------------------------------------
 APP_NAME = "Local AI Document Assistant"

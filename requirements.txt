@@ -18,3 +18,4 @@ pandas             # evaluation dashboard table/chart
 # --- testing ---
 pytest
 httpx              # FastAPI TestClient uses this under the hood
+rank-bm25
