@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document Intelligence Agent</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Document Intelligence Agent</h1>
+      <div class="sub">Ask, summarize, and get page-cited answers — grounded in your own PDFs.</div>
+    </div>
+    <span class="badge">● local · nothing leaves this machine</span>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <section>
+        <h2>Documents</h2>
+        <label class="drop" id="drop">
+          <input type="file" id="file" accept="application/pdf">
+          Drop a PDF here or click to upload
+        </label>
+        <div class="doclist" id="docs" style="margin-top:10px">
+          <div class="empty">No documents yet.</div>
+        </div>
+      </section>
+
+      <section class="field">
+        <label for="scope">Search scope</label>
+        <select id="scope"><option value="">All documents</option></select>
+      </section>
+
+      <section class="field">
+        <label>Retrieval mode</label>
+        <div class="seg" id="mode">
+          <button data-mode="dense">Dense</button>
+          <button data-mode="bm25">BM25</button>
+          <button data-mode="hybrid" class="on">Hybrid</button>
+        </div>
+      </section>
+
+      <section class="empty">
+        Hybrid fuses semantic (dense) + keyword (BM25) search. The agent triages your
+        request, retrieves, answers with citations, or abstains when the docs don't say.
+      </section>
+    </aside>
+
+    <main>
+      <div class="messages" id="messages">
+        <div class="msg bot"><div class="bubble">
+          Upload a PDF on the left, then ask a question. I only answer from your documents —
+          if the answer isn't there, I'll say so instead of guessing.
+        </div></div>
+      </div>
+      <div class="composer">
+        <textarea id="input" rows="1" placeholder="Ask about your documents…"></textarea>
+        <button id="send">Send</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

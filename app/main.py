@@ -10,7 +10,10 @@ Then open http://localhost:8000/docs for the auto-generated interactive API docs
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from app import config
 from app.api import upload, chat, search, agent
@@ -40,6 +43,12 @@ async def health():
     }
 
 
+# Serve the web chat UI at /ui (static HTML/JS, same origin as the API).
+_WEB_DIR = Path(__file__).resolve().parent.parent / "web"
+if _WEB_DIR.is_dir():
+    app.mount("/ui", StaticFiles(directory=str(_WEB_DIR), html=True), name="ui")
+
+
 @app.get("/", tags=["system"])
 async def root():
-    return {"message": f"{config.APP_NAME} v{config.APP_VERSION}", "docs": "/docs"}
+    return {"message": f"{config.APP_NAME} v{config.APP_VERSION}", "ui": "/ui", "docs": "/docs"}
