@@ -1,0 +1,3 @@
+model,quant,perplexity,stderr,chunks,n_ctx,dataset
+Meta-Llama-3.1-8B-Instruct,Q8_0,7.9450,0.28879,18,512,wikitext-2 test (~40KB slice)
+Meta-Llama-3.1-8B-Instruct,Q4_K_M,8.0496,0.29324,18,512,wikitext-2 test (~40KB slice)

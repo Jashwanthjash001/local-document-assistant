@@ -108,13 +108,14 @@ RAG pipeline answers with, and includes a measured quantization study of it.
 **Quantization benchmark** (Apple M1 Pro, Metal; full writeup in
 [`serving/docs/quantization-case-study.md`](serving/docs/quantization-case-study.md)):
 
-| Precision | Size on disk | Prefill (tok/s) | Decode (tok/s) | Role |
-| --------- | ------------ | --------------- | -------------- | ---- |
-| Q4_K_M    | 4.58 GiB     | **204 ± 20**    | **24.4 ± 0.4** | daily driver |
-| Q8_0      | 7.95 GiB     | 103 ± 20        | 14.9 ± 0.8     | quality reference |
+| Precision | Size on disk | Prefill (tok/s) | Decode (tok/s) | Perplexity (WikiText-2) |
+| --------- | ------------ | --------------- | -------------- | ----------------------- |
+| Q4_K_M    | 4.58 GiB     | **204 ± 20**    | **24.4 ± 0.4** | 8.05 ± 0.29 |
+| Q8_0      | 7.95 GiB     | 103 ± 20        | 14.9 ± 0.8     | 7.95 ± 0.29 (reference) |
 
-Q4_K_M is ~2× faster and 42% smaller on disk — the reason it's the default for serving the
-RAG pipeline. (Serving runs on CPU/Metal here; a GPU build of llama.cpp works the same way.)
+Q4_K_M is ~2× faster and 42% smaller on disk, and its perplexity gap vs the Q8_0 reference is
+within measurement noise (8.05 vs 7.95) — near-lossless. That's why it's the default for serving
+the RAG pipeline. (Serving runs on CPU/Metal here; a GPU build of llama.cpp works the same way.)
 
 ## Build stages
 
