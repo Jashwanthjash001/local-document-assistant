@@ -1,0 +1,12 @@
+{
+  "label": "q8_0",
+  "model": "llama-3.1-8b-instruct",
+  "base_url": "http://localhost:8080/v1",
+  "n_answerable": 22,
+  "n_abstain": 10,
+  "grounded_accuracy": 0.864,
+  "cited_page_accuracy": 0.955,
+  "abstain_accuracy": 1.0,
+  "avg_latency_s": 2.15,
+  "p50_latency_s": 2.12
+}

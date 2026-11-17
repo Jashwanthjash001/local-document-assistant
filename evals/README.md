@@ -50,3 +50,25 @@ Across all queries **hybrid has the best recall@1 and MRR** — it's the robust 
 that doesn't collapse on either query type. No single mode wins everything; that's
 the honest result, and why hybrid (RRF) is a sensible default with the mode left
 switchable.
+
+## Quantization x RAG quality
+Does the LLM's quantization level change the *answer*, not just its speed? Same corpus
+and retrieval; only the generation model's quant changes (Llama 3.1 8B). 22 answerable
+(grounded fact must appear + correct page cited) + 10 abstain.
+
+```
+QUANT_LABEL=q4_k_m LLM_BASE_URL=http://localhost:8080/v1 \
+  PYTHONPATH=. .venv/bin/python evals/run_rag_quality.py   # repeat for q8_0
+```
+
+| quant | grounded | cited-page | abstain | median latency |
+| --- | --- | --- | --- | --- |
+| Q4_K_M (4.6 GB) | 86% | 96% | 100% | 2.27s |
+| Q8_0 (8.0 GB) | 86% | 96% | 100% | 2.12s |
+
+**Read:** quantizing Q8 → Q4 leaves RAG answer quality **unchanged** — grounding,
+citation accuracy, and abstain correctness are identical — while the model is 42%
+smaller on disk. That matches the near-lossless perplexity gap (8.05 vs 7.95) and
+confirms it at the answer level: for local RAG, Q4_K_M is the right default. (Latency
+was comparable; Q8 barely fits a 16 GB Mac and swaps, so absolute latency on this box
+isn't a clean speed benchmark.)
