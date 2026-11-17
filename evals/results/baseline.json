@@ -4,7 +4,7 @@
   "chunks_indexed": 47,
   "n_answerable": 58,
   "n_abstain": 10,
-  "relevance_threshold": 0.6,
+  "relevance_threshold": 0.88,
   "top_k": 10,
   "recall": {
     "@1": 0.897,
@@ -13,8 +13,8 @@
     "@10": 1.0
   },
   "mrr": 0.938,
-  "abstain_accuracy": 0.9,
-  "false_abstain_rate": 0.069,
+  "abstain_accuracy": 0.0,
+  "false_abstain_rate": 0.0,
   "per_question": [
     {
       "id": "sa01",
@@ -176,7 +176,7 @@
       "id": "pm03",
       "rank": 1,
       "top_distance": 0.664,
-      "answered": false
+      "answered": true
     },
     {
       "id": "pm04",
@@ -188,13 +188,13 @@
       "id": "pm05",
       "rank": 1,
       "top_distance": 0.618,
-      "answered": false
+      "answered": true
     },
     {
       "id": "pm06",
       "rank": 2,
       "top_distance": 0.662,
-      "answered": false
+      "answered": true
     },
     {
       "id": "pm07",
@@ -344,7 +344,7 @@
       "id": "h15",
       "rank": 6,
       "top_distance": 0.63,
-      "answered": false
+      "answered": true
     },
     {
       "id": "h16",
@@ -368,19 +368,19 @@
       "id": "ab01",
       "rank": null,
       "top_distance": 0.759,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab02",
       "rank": null,
       "top_distance": 0.732,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab03",
       "rank": null,
       "top_distance": 0.782,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab04",
@@ -392,37 +392,37 @@
       "id": "ab05",
       "rank": null,
       "top_distance": 0.751,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab06",
       "rank": null,
       "top_distance": 0.795,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab07",
       "rank": null,
       "top_distance": 0.843,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab08",
       "rank": null,
       "top_distance": 0.656,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab09",
       "rank": null,
       "top_distance": 0.794,
-      "answered": false
+      "answered": true
     },
     {
       "id": "ab10",
       "rank": null,
       "top_distance": 0.603,
-      "answered": false
+      "answered": true
     }
   ]
 }

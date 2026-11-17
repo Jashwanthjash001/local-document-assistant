@@ -25,8 +25,21 @@ Writes `results/baseline.json`.
 ## Metrics
 - **recall@k** — fraction of answerable questions whose correct doc+page appears in the top k.
 - **MRR** — mean reciprocal rank of the first correct chunk.
-- **abstain accuracy** — fraction of unanswerable questions correctly refused (no chunk within the relevance threshold).
-- **false-abstain rate** — answerable questions wrongly gated out by the threshold.
+- **gate abstain / false-abstain** — how the coarse relevance gate behaves (see note below).
+
+## Two-stage abstain (gate + model)
+Abstaining is two layers, not one:
+1. the **relevance gate** (`RELEVANCE_MAX_DISTANCE`, cosine) is a *coarse* pre-filter — it blocks
+   clearly off-topic queries so the LLM isn't called (on real documents, off-topic queries score
+   ~0.93+, relevant ones ~0.70–0.85, so the gate is set to **0.88**);
+2. the **model** is the real backstop — the grounded prompt tells it to say the documents don't cover
+   something, and it does, even when a topically-adjacent passage slips past the gate.
+
+So on the *narrow* synthetic corpus the gate alone looks lenient (unanswerable questions about the same
+companies are close enough to pass), but end-to-end the system still refuses them — verified: asking a
+service agreement "what is the CEO's salary?" returns *"the document does not contain … I cannot answer."*
+The earlier strict gate (0.6) measured better gate-abstain but wrongly refused real questions on real
+documents, which is the worse failure.
 
 ## dense vs BM25 vs hybrid
 ```

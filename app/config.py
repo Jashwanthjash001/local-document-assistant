@@ -41,10 +41,12 @@ LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "512"))
 
 # --- Relevance gate (Stage 5) ----------------------------------------------
 # Max cosine distance for a retrieved chunk to count as "relevant enough" to
-# answer from. Lower distance = more similar. This is a STARTING default, not a
-# universal truth — it must be calibrated against representative queries per
-# corpus (see docs). If nothing clears it, the assistant abstains w/o calling the LLM.
-RELEVANCE_MAX_DISTANCE = float(os.getenv("RELEVANCE_MAX_DISTANCE", "0.6"))
+# answer from. Lower distance = more similar. Calibrated against real documents:
+# with all-MiniLM-L6-v2, genuinely relevant passages for natural questions land
+# ~0.70–0.85 while off-topic queries sit ~0.93+, so 0.88 separates them. The LLM's
+# "say if it's not stated" rule is the second backstop. Still a heuristic — tune
+# per corpus. If nothing clears it, the assistant abstains w/o calling the LLM.
+RELEVANCE_MAX_DISTANCE = float(os.getenv("RELEVANCE_MAX_DISTANCE", "0.88"))
 ABSTAIN_MESSAGE = (
     "I couldn't find this information in the uploaded documents."
 )

@@ -80,10 +80,9 @@ def _normalize(obj: dict, message: str) -> dict:
     # An explicit image request is unambiguous — honor it even if the model missed it.
     if _IMAGE.search(message):
         intent = "extract_images"
-    needs = obj.get("needs_retrieval")
-    needs = bool(needs) if isinstance(needs, bool) else (intent not in ("smalltalk", "extract_images"))
-    if intent == "extract_images":
-        needs = False
+    # Derive retrieval from intent, not from the model's (unreliable) flag: a
+    # 7B triage model often says needs_retrieval=false for real questions.
+    needs = intent in ("qa", "summarize")
     sq = obj.get("standalone_query")
     sq = sq if isinstance(sq, str) and sq.strip() else message
     page = _parse_page(message) if intent == "extract_images" else None

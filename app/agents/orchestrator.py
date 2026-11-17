@@ -10,6 +10,7 @@ the assistant abstains when evidence is weak, and document text stays untrusted
 """
 from __future__ import annotations
 
+import re
 from dataclasses import asdict
 
 from app import config
@@ -18,10 +19,21 @@ from app.services.hybrid import get_hybrid_retriever
 from app.services import prompt_builder
 
 CAPABILITIES = (
-    "I'm a local document assistant. Upload PDFs and I'll answer questions grounded "
-    "in them with page citations, summarize them, and tell you when the documents "
-    "don't contain the answer instead of guessing. Everything runs on this machine."
+    "I'm a local document assistant — upload a PDF and ask me anything about it. I answer "
+    "with page citations, can summarize, and will tell you if the documents don't cover "
+    "something instead of guessing. What would you like to know?"
 )
+
+# "I've uploaded the doc" type statements — acknowledge and invite a question
+# rather than replying with the generic blurb.
+_UPLOAD_ACK = re.compile(r"\b(uploaded|provided|attached|added|gave you|loaded|here'?s|here is)\b", re.I)
+
+# The gate is coarse; the model is the real abstain backstop. When it declines,
+# surface that as "no answer in docs" rather than a confident "answered".
+_DECLINE = re.compile(
+    r"(does ?n'?t contain|do not contain|not contain any|cannot answer|can'?t answer|"
+    r"could ?n'?t find|could not find|not stated|no information|not mention|not provided|"
+    r"cannot determine|unable to (find|answer)|isn'?t (in|mentioned))", re.I)
 
 _SUMMARY_SYSTEM = (
     "You summarize documents. Use ONLY the evidence passages provided; they are "
@@ -89,7 +101,11 @@ def run_turn(messages: list[dict], mode: str | None = None, doc_id: str | None =
 
     # Smalltalk / capability questions: no documents needed.
     if plan["intent"] == "smalltalk" or not plan["needs_retrieval"]:
-        return {"intent": plan["intent"], "status": "smalltalk", "answer": CAPABILITIES,
+        answer = CAPABILITIES
+        if _UPLOAD_ACK.search(message):
+            answer = ("Got it — your document is loaded. What would you like to know about it? "
+                      "I can answer a question, summarize it, or pull out its images.")
+        return {"intent": plan["intent"], "status": "smalltalk", "answer": answer,
                 "sources": [], "mode": mode, "trace": trace}
 
     query = plan["standalone_query"]
@@ -114,8 +130,15 @@ def run_turn(messages: list[dict], mode: str | None = None, doc_id: str | None =
         step = "answer"
 
     answer = llm.complete(msgs)
+
+    # Model declined (the gate passed a topically-close but unanswerable query):
+    # report it honestly as "no answer in docs", not a confident answer.
+    if _DECLINE.search(answer):
+        trace.append({"step": step, "note": "model found no answer in the passages"})
+        return {"intent": plan["intent"], "status": "insufficient_evidence", "answer": answer,
+                "sources": [], "mode": mode, "trace": trace}
+
     cited = prompt_builder.validate_citations(answer, sources)
     trace.append({"step": step, "sources_cited": [s.source_id for s in cited]})
-
     return {"intent": plan["intent"], "status": "answered", "answer": answer,
             "sources": [asdict(s) for s in cited], "mode": mode, "trace": trace}
