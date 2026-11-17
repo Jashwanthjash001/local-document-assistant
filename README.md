@@ -124,15 +124,14 @@ RAG pipeline. (Serving runs on CPU/Metal here; a GPU build of llama.cpp works th
 | 2     | PDF ingestion (extract text)   | ✅ done |
 | 3     | Embedding & vector storage     | ✅ done |
 | 4     | Retrieval pipeline             | ✅ done |
-| 5     | LLM integration (RAG)          | ✅ done — generation loop verified end-to-end against a real model |
+| 5     | LLM integration (RAG)          | ✅ done — verified end-to-end on the local llama.cpp server |
 | 6     | Frontend & evaluation          | ✅ done |
 
 > **Honest status:** Stages 1–4 are fully implemented and verified end-to-end with real
-> embeddings. Stage 5 passes **56 mocked tests**, and the real-model integration test now
-> **passes against a live OpenAI-compatible server** (vLLM) — producing a grounded answer
-> with a correct page citation. The specific **local llama.cpp / offline** serving path uses
-> the identical OpenAI interface and is characterized by the measured quantization benchmark
-> below; running the full loop on that local server is the one remaining step.
+> embeddings. Stage 5 passes **56 mocked tests**, and the real-model integration test
+> **passes against the bundled local llama.cpp server** (Llama 3.1 8B Q4_K_M on Apple Metal) —
+> producing a grounded answer with a correct page citation, fully offline. So "fully offline
+> end-to-end" is now verified, not pending.
 
 ## Setup
 
@@ -198,8 +197,8 @@ tests/                    # pytest (unit + integration, temp-isolated)
 ```
 
 ## Known limitations
-- **Live LLM generation verified** against a real OpenAI-compatible server (vLLM); running
-  the same loop against the *local* llama.cpp server is the one remaining offline-path step.
+- **Live LLM generation verified** end-to-end against the bundled local llama.cpp server
+  (Llama 3.1 8B Q4_K_M, Apple Metal) — grounded answer with a correct page citation, fully offline.
 - **No OCR** — scanned/image-only PDFs yield no text (handled gracefully, not crashed).
 - **No original filename** in metadata yet — citations carry `doc_id` + page, not the upload name.
 - **Relevance threshold is heuristic** — 0.6 works for the sample corpus but needs real calibration.
