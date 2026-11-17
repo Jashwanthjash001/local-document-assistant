@@ -110,3 +110,28 @@ def test_mode_is_passed_through_to_retriever():
     llm, retr = FakeLLM(), FakeRetriever(_near())
     run_turn([{"role": "user", "content": "notice period?"}], llm=llm, retriever=retr, mode="bm25")
     assert retr.calls[0]["mode"] == "bm25"
+
+
+# --- image extraction intent ----------------------------------------------- #
+def test_rule_based_detects_image_and_page():
+    out = _rule_based("can you extract the images on page 3?", [])
+    assert out["intent"] == "extract_images"
+    assert out["page"] == 3 and out["needs_retrieval"] is False
+
+
+def test_image_intent_routes_to_vision_and_degrades_cleanly():
+    # VISION_MODEL is unset by default -> honest "not configured" message, no crash.
+    llm, retr = FakeLLM(), FakeRetriever(_near())
+    res = run_turn([{"role": "user", "content": "extract the images on page 2"}],
+                   llm=llm, retriever=retr, doc_id="doc1")
+    assert res["intent"] == "extract_images" and res["status"] == "images"
+    assert "configured" in res["answer"].lower()
+    assert any(s["step"] == "extract_images" and s["page"] == 2 for s in res["trace"])
+    assert retr.calls == []   # image path never hits document retrieval
+
+
+def test_image_intent_without_a_document_asks_to_pick_one():
+    llm, retr = FakeLLM(), FakeRetriever(_near())
+    res = run_turn([{"role": "user", "content": "show me the figures"}],
+                   llm=llm, retriever=retr, doc_id=None)
+    assert res["status"] == "images" and "document" in res["answer"].lower()

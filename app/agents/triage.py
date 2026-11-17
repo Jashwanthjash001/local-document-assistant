@@ -14,7 +14,7 @@ from __future__ import annotations
 import json
 import re
 
-INTENTS = ("qa", "summarize", "smalltalk")
+INTENTS = ("qa", "summarize", "smalltalk", "extract_images")
 
 _SYSTEM = (
     "You route a document assistant. Given the conversation and the latest user "
@@ -29,6 +29,14 @@ _SYSTEM = (
 _GREETING = re.compile(r"\b(hi|hello|hey|thanks|thank you|who are you|what can you do|"
                        r"what do you do|help)\b", re.I)
 _SUMMARY = re.compile(r"(summar|overview|tl;?dr|gist|recap|key point)", re.I)
+_IMAGE = re.compile(r"\b(image|images|figure|figures|diagram|diagrams|picture|pictures|"
+                    r"chart|charts|graph|photo|photos|graphic|screenshot)\b", re.I)
+_PAGE = re.compile(r"page\s+(\d+)", re.I)
+
+
+def _parse_page(message: str) -> int | None:
+    m = _PAGE.search(message)
+    return int(m.group(1)) if m else None
 
 
 def _history_text(history: list[dict], limit: int = 6) -> str:
@@ -39,8 +47,11 @@ def _history_text(history: list[dict], limit: int = 6) -> str:
 def _rule_based(message: str, history: list[dict]) -> dict:
     m = message.strip()
     low = m.lower()
+    if _IMAGE.search(low):
+        return {"intent": "extract_images", "needs_retrieval": False,
+                "standalone_query": m, "page": _parse_page(m)}
     if _GREETING.search(low) and len(low.split()) <= 7:
-        return {"intent": "smalltalk", "needs_retrieval": False, "standalone_query": m}
+        return {"intent": "smalltalk", "needs_retrieval": False, "standalone_query": m, "page": None}
     intent = "summarize" if _SUMMARY.search(low) else "qa"
     # cheap follow-up condensing: if the message is short and leans on context,
     # prepend the previous user question so retrieval has something concrete.
@@ -48,7 +59,7 @@ def _rule_based(message: str, history: list[dict]) -> dict:
     prior_users = [h["content"] for h in history if h.get("role") == "user"]
     if prior_users and (len(m.split()) <= 4 or low.startswith(("what about", "and ", "it ", "that "))):
         standalone = f"{prior_users[-1]} {m}"
-    return {"intent": intent, "needs_retrieval": True, "standalone_query": standalone}
+    return {"intent": intent, "needs_retrieval": True, "standalone_query": standalone, "page": None}
 
 
 def _parse(raw: str) -> dict | None:
@@ -66,11 +77,17 @@ def _normalize(obj: dict, message: str) -> dict:
     intent = obj.get("intent")
     if intent not in INTENTS:
         intent = "qa"
+    # An explicit image request is unambiguous — honor it even if the model missed it.
+    if _IMAGE.search(message):
+        intent = "extract_images"
     needs = obj.get("needs_retrieval")
-    needs = bool(needs) if isinstance(needs, bool) else (intent != "smalltalk")
+    needs = bool(needs) if isinstance(needs, bool) else (intent not in ("smalltalk", "extract_images"))
+    if intent == "extract_images":
+        needs = False
     sq = obj.get("standalone_query")
     sq = sq if isinstance(sq, str) and sq.strip() else message
-    return {"intent": intent, "needs_retrieval": needs, "standalone_query": sq.strip()}
+    page = _parse_page(message) if intent == "extract_images" else None
+    return {"intent": intent, "needs_retrieval": needs, "standalone_query": sq.strip(), "page": page}
 
 
 def triage(message: str, history: list[dict] | None = None, llm=None) -> dict:

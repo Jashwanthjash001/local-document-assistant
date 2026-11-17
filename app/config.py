@@ -71,6 +71,15 @@ CHUNK_MAX_TOKENS = int(os.getenv("CHUNK_MAX_TOKENS", "256"))
 RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "dense")
 RRF_K = int(os.getenv("RRF_K", "60"))   # RRF damping constant
 
+# Extraction: "basic" (PyMuPDF text, the default) or "docling" (layout + tables +
+# OCR for scanned pages; heavier, optional dependency, falls back to basic).
+EXTRACTION_MODE = os.getenv("EXTRACTION_MODE", "basic")
+
+# Local vision model for extracting images/figures from a page (a VLM served by
+# Ollama, e.g. a qwen2-vl or granite-docling). Empty = image extraction disabled.
+VISION_MODEL = os.getenv("VISION_MODEL", "")
+VISION_BASE_URL = os.getenv("VISION_BASE_URL", LLM_BASE_URL)
+
 # --- App metadata ----------------------------------------------------------
 APP_NAME = "Local AI Document Assistant"
 APP_VERSION = "0.3.0"   # Stage 3

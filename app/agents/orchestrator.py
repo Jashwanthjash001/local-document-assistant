@@ -68,6 +68,25 @@ def run_turn(messages: list[dict], mode: str | None = None, doc_id: str | None =
                   "needs_retrieval": plan["needs_retrieval"],
                   "query": plan["standalone_query"]})
 
+    # Image / figure extraction: render the page and run a local vision model.
+    if plan["intent"] == "extract_images":
+        from app.services.vision import extract_page_images
+        page = plan.get("page") or 1
+        trace.append({"step": "extract_images", "page": page, "doc_id": doc_id})
+        if not doc_id:
+            return {"intent": "extract_images", "status": "images", "mode": mode, "sources": [],
+                    "answer": "Pick a document first (scope selector), then ask to extract its images.",
+                    "trace": trace}
+        res = extract_page_images(doc_id, page)
+        if "error" in res:
+            return {"intent": "extract_images", "status": "images", "answer": res["error"],
+                    "sources": [], "mode": mode, "trace": trace}
+        return {"intent": "extract_images", "status": "images",
+                "answer": f"Page {res['page']}:\n\n{res['extraction']}",
+                "sources": [{"source_id": "Image", "doc_id": doc_id,
+                             "page_number": res["page"], "chunk_index": 0}],
+                "mode": mode, "trace": trace}
+
     # Smalltalk / capability questions: no documents needed.
     if plan["intent"] == "smalltalk" or not plan["needs_retrieval"]:
         return {"intent": plan["intent"], "status": "smalltalk", "answer": CAPABILITIES,

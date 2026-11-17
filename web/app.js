@@ -68,7 +68,7 @@ function bubble(role, inner) {
 function renderResult(r) {
   const status = r.status || "answered";
   const label = { answered: "answered", summary: "summary", insufficient_evidence: "no answer in docs",
-                  smalltalk: "assistant" }[status] || status;
+                  smalltalk: "assistant", images: "image extraction" }[status] || status;
   const pillClass = status === "answered" && r.intent === "summarize" ? "summary" : status;
   let html = `<div class="bubble"><span class="pill ${pillClass}">${label}</span>${esc(r.answer || "")}`;
   if (r.sources && r.sources.length) {

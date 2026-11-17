@@ -15,6 +15,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 
 from app import config
 from app.services.pdf_processor import extract_pdf, PDFProcessingError
+from app.services.extraction import extract as extract_document
 from app.services.chunker import chunk_pages
 from app.services.embedding import get_embedding_service
 from app.services.vector_store import get_vector_store
@@ -113,9 +114,9 @@ async def index_document(doc_id: str):
     """
     stored_path = _resolve_stored_pdf(doc_id)
 
-    # 1) Extract text (reuses the Stage 2 service).
+    # 1) Extract text (basic PyMuPDF, or docling if EXTRACTION_MODE=docling).
     try:
-        extraction = extract_pdf(stored_path, doc_id=doc_id)
+        extraction = extract_document(stored_path, doc_id=doc_id)
     except PDFProcessingError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
