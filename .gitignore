@@ -18,3 +18,4 @@ serving/models/
 *.tar.gz
 evals/.chroma_eval/
 evals/corpus/
+evals/.chroma_rag/
