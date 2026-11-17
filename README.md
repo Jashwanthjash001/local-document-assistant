@@ -131,8 +131,8 @@ the RAG pipeline. (Serving runs on CPU/Metal here; a GPU build of llama.cpp work
 > **Honest status:** Stages 1–4 are fully implemented and verified end-to-end with real
 > embeddings. Stage 5 passes **56 mocked tests**, and the real-model integration test
 > **passes against the bundled local llama.cpp server** (Llama 3.1 8B Q4_K_M on Apple Metal) —
-> producing a grounded answer with a correct page citation, fully offline. So "fully offline
-> end-to-end" is now verified, not pending.
+> uploads a doc, retrieves, and returns a grounded answer with a correct page citation, fully
+> offline (`pytest -m integration`, 1 passed). So "fully offline end-to-end" is verified, not pending.
 
 ## Setup
 
@@ -162,7 +162,7 @@ first: `./serving/serve.sh` (serves on :8080, which `app/config.py` already targ
 ```bash
 .venv/bin/python -m pytest -q                 # 56 fast tests (mocked LLM, no GPU)
 .venv/bin/python -m pytest -q -m slow         # real CPU embedding tests (downloads model once)
-.venv/bin/python -m pytest -q -m integration  # real local Llama (needs serve.sh running)
+.venv/bin/python -m pytest -q -m integration  # real local Llama (needs serve.sh running) — 1 passed
 ```
 
 ## Project layout
