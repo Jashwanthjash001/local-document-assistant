@@ -135,3 +135,22 @@ def test_image_intent_without_a_document_asks_to_pick_one():
     res = run_turn([{"role": "user", "content": "show me the figures"}],
                    llm=llm, retriever=retr, doc_id=None)
     assert res["status"] == "images" and "document" in res["answer"].lower()
+
+
+# --- structured / schema-fill extraction ----------------------------------- #
+def test_format_request_routes_to_schema_extract():
+    llm = FakeLLM(answer='{"name":"Alice Ng","phone":""}')
+    retr = FakeRetriever(_near())
+    res = run_turn([{"role": "user", "content": 'give me {name:"", phone:""} in this format'}],
+                   llm=llm, retriever=retr)
+    assert res["intent"] == "extract" and res["status"] == "answered"
+    assert "Alice Ng" in res["answer"]
+
+
+def test_schema_extract_does_not_decline_on_blanks():
+    # a schema answer with empty fields must NOT be flipped to insufficient_evidence
+    llm = FakeLLM(answer='[{"name":"Bob","phone":""}]  (no information for phone)')
+    retr = FakeRetriever(_near())
+    res = run_turn([{"role": "user", "content": "list everyone as a table"}],
+                   llm=llm, retriever=retr)
+    assert res["status"] == "answered" and res["intent"] == "extract"
