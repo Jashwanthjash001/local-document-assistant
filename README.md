@@ -124,12 +124,15 @@ RAG pipeline. (Serving runs on CPU/Metal here; a GPU build of llama.cpp works th
 | 2     | PDF ingestion (extract text)   | ✅ done |
 | 3     | Embedding & vector storage     | ✅ done |
 | 4     | Retrieval pipeline             | ✅ done |
-| 5     | LLM integration (RAG)          | ✅ done (mock-tested; **live LLM generation pending**) |
+| 5     | LLM integration (RAG)          | ✅ done — generation loop verified end-to-end against a real model |
 | 6     | Frontend & evaluation          | ✅ done |
 
 > **Honest status:** Stages 1–4 are fully implemented and verified end-to-end with real
-> embeddings. Stage 5 passes **56 mocked tests**; the real local-model integration test is
-> wired but not yet run, so "fully offline end-to-end" is pending that run.
+> embeddings. Stage 5 passes **56 mocked tests**, and the real-model integration test now
+> **passes against a live OpenAI-compatible server** (vLLM) — producing a grounded answer
+> with a correct page citation. The specific **local llama.cpp / offline** serving path uses
+> the identical OpenAI interface and is characterized by the measured quantization benchmark
+> below; running the full loop on that local server is the one remaining step.
 
 ## Setup
 
@@ -195,7 +198,8 @@ tests/                    # pytest (unit + integration, temp-isolated)
 ```
 
 ## Known limitations
-- **Live LLM generation not yet verified** (Stage 5 is mock-tested) — see status note above.
+- **Live LLM generation verified** against a real OpenAI-compatible server (vLLM); running
+  the same loop against the *local* llama.cpp server is the one remaining offline-path step.
 - **No OCR** — scanned/image-only PDFs yield no text (handled gracefully, not crashed).
 - **No original filename** in metadata yet — citations carry `doc_id` + page, not the upload name.
 - **Relevance threshold is heuristic** — 0.6 works for the sample corpus but needs real calibration.
