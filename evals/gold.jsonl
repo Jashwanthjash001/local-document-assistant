@@ -46,3 +46,23 @@
 {"id": "ab06", "question": "Is there a mobile app for iOS?", "doc": null, "page": null, "answerable": false}
 {"id": "ab07", "question": "What is the office address in Tokyo?", "doc": null, "page": null, "answerable": false}
 {"id": "ab08", "question": "What discount applies for annual prepayment?", "doc": null, "page": null, "answerable": false}
+{"id": "h01", "question": "Which header carries the API key?", "doc": "api_reference", "page": 1, "answerable": true, "hard": true}
+{"id": "h02", "question": "What is the maximum file size for ingestion?", "doc": "api_reference", "page": 3, "answerable": true, "hard": true}
+{"id": "h03", "question": "What is the default rate limit per minute?", "doc": "api_reference", "page": 5, "answerable": true, "hard": true}
+{"id": "h04", "question": "Which error code means the uploaded file exceeds the size limit?", "doc": "api_reference", "page": 6, "answerable": true, "hard": true}
+{"id": "h05", "question": "Which endpoint is used to upload documents?", "doc": "api_reference", "page": 3, "answerable": true, "hard": true}
+{"id": "h06", "question": "What is the maximum top_k on the search endpoint?", "doc": "api_reference", "page": 4, "answerable": true, "hard": true}
+{"id": "h07", "question": "Which configuration key sets the per-request timeout?", "doc": "api_reference", "page": 7, "answerable": true, "hard": true}
+{"id": "h08", "question": "How are webhook notifications signed?", "doc": "api_reference", "page": 8, "answerable": true, "hard": true}
+{"id": "h09", "question": "What compliance certifications does the company hold?", "doc": "security_policy", "page": 1, "answerable": true, "hard": true}
+{"id": "h10", "question": "What encryption is used for data at rest?", "doc": "security_policy", "page": 2, "answerable": true, "hard": true}
+{"id": "h11", "question": "How often are encryption keys rotated?", "doc": "security_policy", "page": 2, "answerable": true, "hard": true}
+{"id": "h12", "question": "Within how long must a breach be disclosed to affected customers?", "doc": "security_policy", "page": 4, "answerable": true, "hard": true}
+{"id": "h13", "question": "How long must administrative passwords be?", "doc": "security_policy", "page": 6, "answerable": true, "hard": true}
+{"id": "h14", "question": "Which release added hybrid retrieval?", "doc": "release_notes", "page": 1, "answerable": true, "hard": true}
+{"id": "h15", "question": "Which bug was fixed in release 3.1.0?", "doc": "release_notes", "page": 2, "answerable": true, "hard": true}
+{"id": "h16", "question": "Which bug causes slow ingestion for large files?", "doc": "release_notes", "page": 4, "answerable": true, "hard": true}
+{"id": "h17", "question": "Which release removes the legacy v1 endpoints?", "doc": "release_notes", "page": 3, "answerable": true, "hard": true}
+{"id": "h18", "question": "What will the default embedding model change to?", "doc": "release_notes", "page": 5, "answerable": true, "hard": true}
+{"id": "ab09", "question": "Which release adds voice input support?", "doc": null, "page": null, "answerable": false, "hard": true}
+{"id": "ab10", "question": "What is the price of the enterprise plan?", "doc": null, "page": null, "answerable": false, "hard": true}

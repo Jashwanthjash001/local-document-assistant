@@ -135,6 +135,70 @@ DOCS: dict[str, list[tuple[str, str]]] = {
          "regular security reviews. For privacy questions, contact privacy@example.com. We respond "
          "to verified requests within thirty (30) days."),
     ],
+    "api_reference": [
+        ("Authentication",
+         "All requests must include the API key in the X-API-Key header. Keys are issued per project "
+         "in the developer console. A request without a valid key returns HTTP 401 Unauthorized."),
+        ("Base URL and Versioning",
+         "The current API version is v3 and the base URL is https://api.example.com/v3. The previous "
+         "version v2 is deprecated and will be removed on December 31, 2025."),
+        ("Ingest Endpoint",
+         "Documents are uploaded with a POST request to the /v3/ingest endpoint. The maximum file "
+         "size is 25 megabytes. Supported formats are PDF, DOCX, and TXT."),
+        ("Search Endpoint",
+         "Use GET /v3/search with a required query parameter q and an optional top_k parameter. The "
+         "default top_k is 5 and the maximum allowed value is 50."),
+        ("Rate Limits",
+         "The default rate limit is 60 requests per minute per API key. Exceeding it returns HTTP 429 "
+         "with a Retry-After header. Enterprise plans allow 600 requests per minute."),
+        ("Error Codes",
+         "Error E-4001 indicates an invalid request body. Error E-4096 indicates the uploaded file "
+         "exceeds the size limit. Error E-5003 indicates an internal processing failure."),
+        ("Configuration Keys",
+         "Set MAX_BATCH_SIZE to control how many documents are processed together. Set EMBED_MODEL to "
+         "choose the embedding model. Set REQUEST_TIMEOUT_SECONDS for the per-request timeout."),
+        ("SDK and Webhooks",
+         "The official Python SDK is installed with pip install example-sdk. Webhook notifications are "
+         "signed with an HMAC-SHA256 signature carried in the X-Signature header."),
+    ],
+    "security_policy": [
+        ("Standards and Compliance",
+         "The company maintains ISO 27001 certification and completes an annual SOC 2 Type II audit. "
+         "Compliance reports are available to enterprise customers under NDA."),
+        ("Encryption",
+         "Data is encrypted in transit using TLS 1.3 and at rest using AES-256. Encryption keys are "
+         "rotated every ninety (90) days and stored in a hardware security module."),
+        ("Access Control",
+         "Access follows the principle of least privilege. Multi-factor authentication is required for "
+         "all administrative accounts. Access reviews are conducted quarterly."),
+        ("Incident Response",
+         "Security incidents must be reported to the security team within one (1) hour. Confirmed "
+         "breaches affecting customer data are disclosed to affected customers within seventy-two (72) "
+         "hours."),
+        ("Vulnerability Management",
+         "Critical vulnerabilities are patched within seven (7) days of disclosure. The company runs "
+         "quarterly penetration tests and a continuous bug-bounty program."),
+        ("Password Policy",
+         "Administrative passwords must be at least sixteen (16) characters and rotated every sixty "
+         "(60) days. A new password is rejected if it matches any of the last ten passwords."),
+    ],
+    "release_notes": [
+        ("Version 3.2.0",
+         "Release 3.2.0 adds hybrid retrieval combining dense and keyword search. It also introduces "
+         "a rerank parameter on the /v3/search endpoint."),
+        ("Version 3.1.0",
+         "Release 3.1.0 adds support for DOCX ingestion and improves table extraction accuracy. Bug "
+         "BUG-1287, which caused duplicate chunks on re-index, is fixed."),
+        ("Version 3.0.0",
+         "Release 3.0.0 is a major version that changes the base URL to /v3 and removes the legacy "
+         "/v1 endpoints. Migration guidance is in the documentation."),
+        ("Known Issues",
+         "Issue BUG-1342 causes slow ingestion for files larger than 20 megabytes. The workaround is "
+         "to split large files. A fix is planned for release 3.3.0."),
+        ("Deprecations",
+         "The v2 API is deprecated as of release 3.0.0. The EMBED_MODEL default changes from minilm to "
+         "bge-small in release 3.3.0."),
+    ],
 }
 
 

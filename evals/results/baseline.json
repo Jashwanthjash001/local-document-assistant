@@ -1,20 +1,20 @@
 {
   "mode": "dense-only (baseline)",
-  "corpus_docs": 4,
-  "chunks_indexed": 28,
-  "n_answerable": 40,
-  "n_abstain": 8,
+  "corpus_docs": 7,
+  "chunks_indexed": 47,
+  "n_answerable": 58,
+  "n_abstain": 10,
   "relevance_threshold": 0.6,
   "top_k": 10,
   "recall": {
-    "@1": 0.95,
-    "@3": 0.975,
-    "@5": 1.0,
+    "@1": 0.897,
+    "@3": 0.966,
+    "@5": 0.983,
     "@10": 1.0
   },
-  "mrr": 0.969,
-  "abstain_accuracy": 0.875,
-  "false_abstain_rate": 0.1,
+  "mrr": 0.938,
+  "abstain_accuracy": 0.9,
+  "false_abstain_rate": 0.069,
   "per_question": [
     {
       "id": "sa01",
@@ -144,8 +144,8 @@
     },
     {
       "id": "eh10",
-      "rank": 1,
-      "top_distance": 0.585,
+      "rank": 2,
+      "top_distance": 0.509,
       "answered": true
     },
     {
@@ -204,9 +204,9 @@
     },
     {
       "id": "pm08",
-      "rank": 1,
-      "top_distance": 0.627,
-      "answered": false
+      "rank": 2,
+      "top_distance": 0.582,
+      "answered": true
     },
     {
       "id": "pp01",
@@ -257,6 +257,114 @@
       "answered": true
     },
     {
+      "id": "h01",
+      "rank": 1,
+      "top_distance": 0.379,
+      "answered": true
+    },
+    {
+      "id": "h02",
+      "rank": 1,
+      "top_distance": 0.292,
+      "answered": true
+    },
+    {
+      "id": "h03",
+      "rank": 1,
+      "top_distance": 0.382,
+      "answered": true
+    },
+    {
+      "id": "h04",
+      "rank": 1,
+      "top_distance": 0.237,
+      "answered": true
+    },
+    {
+      "id": "h05",
+      "rank": 1,
+      "top_distance": 0.387,
+      "answered": true
+    },
+    {
+      "id": "h06",
+      "rank": 1,
+      "top_distance": 0.225,
+      "answered": true
+    },
+    {
+      "id": "h07",
+      "rank": 2,
+      "top_distance": 0.438,
+      "answered": true
+    },
+    {
+      "id": "h08",
+      "rank": 1,
+      "top_distance": 0.322,
+      "answered": true
+    },
+    {
+      "id": "h09",
+      "rank": 1,
+      "top_distance": 0.392,
+      "answered": true
+    },
+    {
+      "id": "h10",
+      "rank": 1,
+      "top_distance": 0.347,
+      "answered": true
+    },
+    {
+      "id": "h11",
+      "rank": 1,
+      "top_distance": 0.335,
+      "answered": true
+    },
+    {
+      "id": "h12",
+      "rank": 1,
+      "top_distance": 0.338,
+      "answered": true
+    },
+    {
+      "id": "h13",
+      "rank": 1,
+      "top_distance": 0.258,
+      "answered": true
+    },
+    {
+      "id": "h14",
+      "rank": 1,
+      "top_distance": 0.415,
+      "answered": true
+    },
+    {
+      "id": "h15",
+      "rank": 6,
+      "top_distance": 0.63,
+      "answered": false
+    },
+    {
+      "id": "h16",
+      "rank": 1,
+      "top_distance": 0.232,
+      "answered": true
+    },
+    {
+      "id": "h17",
+      "rank": 1,
+      "top_distance": 0.412,
+      "answered": true
+    },
+    {
+      "id": "h18",
+      "rank": 1,
+      "top_distance": 0.453,
+      "answered": true
+    },
+    {
       "id": "ab01",
       "rank": null,
       "top_distance": 0.759,
@@ -289,19 +397,31 @@
     {
       "id": "ab06",
       "rank": null,
-      "top_distance": 0.882,
+      "top_distance": 0.795,
       "answered": false
     },
     {
       "id": "ab07",
       "rank": null,
-      "top_distance": 0.854,
+      "top_distance": 0.843,
       "answered": false
     },
     {
       "id": "ab08",
       "rank": null,
       "top_distance": 0.656,
+      "answered": false
+    },
+    {
+      "id": "ab09",
+      "rank": null,
+      "top_distance": 0.794,
+      "answered": false
+    },
+    {
+      "id": "ab10",
+      "rank": null,
+      "top_distance": 0.603,
       "answered": false
     }
   ]

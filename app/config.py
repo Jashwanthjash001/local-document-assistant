@@ -64,6 +64,12 @@ CHUNK_TARGET_TOKENS = int(os.getenv("CHUNK_TARGET_TOKENS", "200"))
 CHUNK_OVERLAP_TOKENS = int(os.getenv("CHUNK_OVERLAP_TOKENS", "30"))
 CHUNK_MAX_TOKENS = int(os.getenv("CHUNK_MAX_TOKENS", "256"))
 
+# Retrieval mode: "dense" (vector only, the original), "bm25" (keyword only),
+# or "hybrid" (dense + BM25 fused with Reciprocal Rank Fusion). Switchable per
+# request from the UI; this is the default.
+RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "dense")
+RRF_K = int(os.getenv("RRF_K", "60"))   # RRF damping constant
+
 # --- App metadata ----------------------------------------------------------
 APP_NAME = "Local AI Document Assistant"
 APP_VERSION = "0.3.0"   # Stage 3

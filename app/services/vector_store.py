@@ -101,6 +101,30 @@ class VectorStore:
     def total_count(self) -> int:
         return self._collection.count()
 
+    def all_chunks_with_vectors(self, doc_id: str | None = None) -> list[dict]:
+        """Every stored chunk with its text, metadata, and embedding vector.
+        Used by hybrid retrieval (BM25 needs the raw text; dense re-ranking needs
+        the vectors). Fine for the modest local corpora this app handles."""
+        where = {"doc_id": doc_id} if doc_id else None
+        res = self._collection.get(where=where, include=["documents", "metadatas", "embeddings"])
+        ids = res.get("ids") or []
+        docs = res.get("documents") or []
+        metas = res.get("metadatas") or []
+        embs = res.get("embeddings")
+        embs = embs if embs is not None else []
+        out: list[dict] = []
+        for i, cid in enumerate(ids):
+            m = metas[i] or {}
+            out.append({
+                "id": cid,
+                "text": docs[i],
+                "doc_id": m.get("doc_id"),
+                "page_number": m.get("page_number"),
+                "chunk_index": m.get("chunk_index"),
+                "embedding": list(embs[i]) if i < len(embs) else None,
+            })
+        return out
+
 
 # --- module singleton ------------------------------------------------------
 _store: VectorStore | None = None

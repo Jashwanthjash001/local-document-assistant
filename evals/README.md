@@ -28,8 +28,25 @@ Writes `results/baseline.json`.
 - **abstain accuracy** — fraction of unanswerable questions correctly refused (no chunk within the relevance threshold).
 - **false-abstain rate** — answerable questions wrongly gated out by the threshold.
 
-## Note on difficulty
-The first corpus is clean and well-separated, so dense retrieval already saturates
-(recall@5 = 1.0). A larger, more confusable corpus with keyword/identifier-style
-queries is used to actually discriminate dense vs BM25 vs hybrid — see the hybrid
-eval results.
+## dense vs BM25 vs hybrid
+```
+PYTHONPATH=. .venv/bin/python evals/run_compare.py   # writes results/retrieval_compare.json
+```
+7 docs (47 chunks). The gold set includes a **hard subset** (18 exact-term /
+identifier / confusable questions — error codes, endpoints, bug IDs) where keyword
+matching is expected to help.
+
+| | recall@1 | recall@3 | recall@5 | MRR |
+| --- | --- | --- | --- | --- |
+| **All (58)** dense | 0.897 | 0.966 | 0.983 | 0.938 |
+| All — bm25 | 0.897 | 0.931 | 0.966 | 0.924 |
+| All — **hybrid** | **0.914** | 0.948 | 0.966 | **0.940** |
+| **Hard (18)** dense | 0.889 | 0.944 | 0.944 | 0.926 |
+| Hard — **bm25** | **0.944** | **1.000** | **1.000** | **0.972** |
+| Hard — hybrid | 0.889 | 0.944 | 1.000 | 0.931 |
+
+**Read:** on exact-term queries **BM25 clearly wins** (recall@3 1.00 vs dense 0.94).
+Across all queries **hybrid has the best recall@1 and MRR** — it's the robust default
+that doesn't collapse on either query type. No single mode wins everything; that's
+the honest result, and why hybrid (RRF) is a sensible default with the mode left
+switchable.
